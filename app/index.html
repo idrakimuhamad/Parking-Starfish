@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>goNpark</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.5.5/css/tachyons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuVyKsofj3wQkRRXElrwIQaqKdDhbFzS0"></script>
+</head>
+
+<body>
+    <div class="app-container container relative">
+        <div class="overlay animated fixed w-100 vh-100 top-0 left-0"></div>
+        <article class="animated fadeInDown mw5 center tc bg-white br3 pa3 pa4-ns ba b--black-10 relative welcome">
+            <h1 class="f4 measure">goNpark</h1>
+            <hr class="mw3 bb bw1 b--black-10">
+            <p class="lh-copy measure center f6 black-70">
+                No more hassle in finding available parking around you
+            </p>
+            <a class="f6 link dim ph3 pv2 mb2 dib white bg-black ttc get-started" href="#0">Let's get started</a>
+        </article>
+        <div class="app-header animated fadeInDown hidden shadow-2 fixed w-100 top-0 left-0 bg-white pa2 pa3-m">
+            <nav class="dt w-100 center">
+                <div class="logo-container dtc w4 v-mid">
+                    <a href="/" class="dib w2 h2 pa1 ba b--white-90 grow-large border-box logo">
+                        <svg class="link black-90 hover-black" data-icon="skull" viewBox="0 0 32 32" style="fill:currentcolor">
+              <title>skull icon</title>
+              <path d="M16 0 C6 0 2 4 2 14 L2 22 L6 24 L6 30 L26 30 L26 24 L30 22 L30 14 C30 4 26 0 16 0 M9 12 A4.5 4.5 0 0 1 9 21 A4.5 4.5 0 0 1 9 12 M23 12 A4.5 4.5 0 0 1 23 21 A4.5 4.5 0 0 1 23 12"></path>
+            </svg>
+                    </a>
+                    <span class="lh-body f6 measure relative dn">Loading...</span>
+                </div>
+                <div class="dtc v-mid tr">
+                    <a class="f6 fw4 hover-black no-underline black-70 pv2 ph3" href="/">Login</a>
+                </div>
+            </nav>
+        </div>
+        <div class="app-options animated hidden shadow-2 fixed w-100 w-30-l vh-100--ns left-0 bottom-0-ns bg-white pa1 pa3-m">
+            <div class="app-options-inner dt w-100 mw8 pa0--ns center">
+                <div class="w-100 radius-input animated fadeIn">
+                    <form class="radius-query mw7 ph2 pv1" novalidate="true">
+                        <fieldset class="cf bn ma0 pa0">
+                            <div class="cf">
+                                <legend class="fl w-20 w-100-m pv2 f6 f5-l lh-solid black-80">
+                                    <span class="db pv1">Radius</span>
+                                    <span class="radius-value db pv1 measure">240</span>
+                                </legend>
+                                <div class="fl w-80 w-100-m tc pv3 slider">
+                                    <input id="radius" class="slider-input w-70 center mv2" type="range" min="10" max="500" value="240">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="app-location-details hidden animated fadeIn pa2">
+                    <hr class="bb bw1 b--black-10">
+                    <h5 class="ttu tracked measure relative">
+                        Parking Location <a href="#" class="close-details black absolute right-0"><i class="icon ion-close"></i></a>
+                    </h5>
+                    <p class="parking-place lh-body f6 measure"></p>
+                </div>
+            </div>
+        </div>
+        <div class="map-container fixed top-0 right-0 w-100">
+            <div class="animated fadeIn loading-container absolute top-0 left-0 w-100 h-100 hidden">
+                <article class="loading-inner animated fadeInDown mw5 center mv6 tc bg-white br3 pa3 pa4-ns ba b--black-10 relative">
+                    <p class="lh-copy measure center f6 black-70 loading-current-position hidden">
+                        Looking for your current position...
+                    </p>
+                </article>
+            </div>
+            <div class="map-layer w-100" id="map"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

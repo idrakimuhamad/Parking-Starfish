@@ -1,0 +1,24 @@
+{
+    "parkings": [{
+        "CCTV_ID": "CCTV_Chancellery-3",
+        "Location": "Chancellery",
+        "Coordinate_Lat": "3.069717",
+        "Coordinate_Lng": "101.503288",
+        "Parking_Availability": "3",
+        "distance": "0.22175595244931864"
+    }, {
+        "CCTV_ID": "CCTV_FSKM_A-2",
+        "Location": "Faculty of Computer & Mathematical Sciences",
+        "Coordinate_Lat": "3.071057",
+        "Coordinate_Lng": "101.499741",
+        "Parking_Availability": "4",
+        "distance": "0.2327979598384431"
+    }, {
+        "CCTV_ID": "CCTV_Chancellery-2",
+        "Location": "Chancellery",
+        "Coordinate_Lat": "3.069490",
+        "Coordinate_Lng": "101.503204",
+        "Parking_Availability": "8",
+        "distance": "0.2336369255816583"
+    }]
+}
