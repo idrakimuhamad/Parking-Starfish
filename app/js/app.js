@@ -89,7 +89,7 @@ var userMarkerCircle = function(rad) {
     $('.logo-container').toggleClass('loading');
 
     setTimeout(function() {
-        searchForParking();
+        searchForParking(rad);
     }, 3000);
 };
 
@@ -105,9 +105,9 @@ var drawRadius = function(rad) {
     map.panTo(userCoord);
 };
 
-var searchForParking = function() {
+var searchForParking = function(radius) {
     // query from DB in AJAX
-    var parkingRespond = requestAPI();
+    var parkingRespond = requestAPI(rad);
 
     parkingRespond.done(function(data) {
         if (data) {
@@ -186,7 +186,7 @@ var requestAPI = function(radius) {
         lat: 3.071087,
         lng: 101.501837
     };
-    var endpoint = 'http://localhost/SmartParkingSystem/api/phpsqlsearch_parkingJSON.php?lat='
+    var endpoint = 'http://localhost:8080/goNpark/src/api/phpsqlsearch_parkingJSON.php?lat='
                     + coord.lat + '&lng=' + coord.lng + '&radius=' + radius;
 
     return $.ajax({
@@ -224,7 +224,7 @@ $(document).ready(function() {
 
         $('.logo-container').toggleClass('loading');
         queryTimeout = setTimeout(function() {
-            searchForParking();
+            searchForParking(radius);
         }, 1500);
     });
 
