@@ -4,6 +4,7 @@
 var map, userCoord, directionsService, directionDisplay, radius, userMarker, queryTimeout;
 var markers = [];
 
+// initialize the google map service and map
 function initialize() {
     userCoord = new google.maps.LatLng(3.071087, 101.501837);
     var mapOptions = {
@@ -20,8 +21,10 @@ function initialize() {
     directionDisplay.setMap(map);
 }
 
+// trigger the initialize function on window load
 google.maps.event.addDomListener(window, 'load', initialize);
 
+// simulate the initial search page interaction and animation
 var initiateSearchPage = function() {
     $('body').addClass('search-page');
     $('.welcome').addClass('fadeOutUp');
@@ -43,12 +46,14 @@ var initiateSearchPage = function() {
     }, 2000);
 };
 
+// simulate the process of getting current position
 var lookupCurrent = function() {
     setTimeout(function() {
         userMarkerCircle(240)
     }, 4500);
 };
 
+// mark the user position
 var userMarkerCircle = function(rad) {
     $('.loading-inner').addClass('fadeOutUp');
 
@@ -83,17 +88,19 @@ var userMarkerCircle = function(rad) {
         radius: rad
     });
 
+    // resize the map and pan to user position
     google.maps.event.trigger(map, 'resize');
     map.panTo(userCoord);
 
     $('.logo-container').toggleClass('loading');
 
+    // search for the parking
     setTimeout(function() {
         searchForParking(rad);
     }, 3000);
 };
 
-
+// draw the selected radius
 var drawRadius = function(rad) {
     $('.radius-input').removeClass('hidden');
     $('.loading-current-position').addClass('hidden');
@@ -105,9 +112,11 @@ var drawRadius = function(rad) {
     map.panTo(userCoord);
 };
 
+
+// search the parking, make the API and create the marker
 var searchForParking = function(radius) {
     // query from DB in AJAX
-    var parkingRespond = requestAPI(rad);
+    var parkingRespond = requestAPI(radius);
 
     parkingRespond.done(function(data) {
         if (data) {
@@ -115,6 +124,8 @@ var searchForParking = function(radius) {
 
             if (parkingData.length) {
                 parkingData.forEach(function(parking, i) {
+                  // check if the parking space is > 0
+                  if (parking.Parking_Availability > 0) {
                     window.setTimeout(function() {
                         var coord = new google.maps.LatLng(parking.Coordinate_Lat, parking.Coordinate_Lng);
                         var marker = new google.maps.Marker({
@@ -133,6 +144,7 @@ var searchForParking = function(radius) {
 
                         markers.push(marker);
                     }, i * 300);
+                  }
                 });
             }
         }
@@ -140,8 +152,12 @@ var searchForParking = function(radius) {
     });
 };
 
+// calculate the route for selected marker
 var calculateRoute = function(origin, destination) {
     directionDisplay.setMap(map);
+
+    // hide all markers
+    clearMarkers(null);
 
     directionsService.route({
       origin: origin,
@@ -156,8 +172,14 @@ var calculateRoute = function(origin, destination) {
     });
 };
 
+// clear the currently selected direction
 var clearRoute = function() {
     directionDisplay.setMap(null);
+
+    // show back the markers
+    showMarkers();
+
+    // zoom to the default position and pan to user position
     map.setZoom(16);
     map.panTo(userCoord);
 
@@ -165,22 +187,41 @@ var clearRoute = function() {
         .find('.parking-place').text('');
 };
 
+// clear any user radius drawn
 var clearRadius = function() {
     radius && radius.setMap(null);
 };
 
-var clearMarkers = function() {
+// clear all markers (hidden, not delete)
+var clearMarkers = function(arg) {
     if (markers.length) {
         for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(null);
+            markers[i].setMap(arg);
         }
     }
 };
 
+// show any existing markers
+var showMarkers = function() {
+  if (markers.length) {
+      for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+      }
+  }
+}
+
+// remove all markers
+var destroyMarkers = function() {
+  clearMarkers();
+  markers = [];
+}
+
+// clear user marker
 var clearUser = function() {
     userMarker && userMarker.setMap(null);
 };
 
+// make the API request
 var requestAPI = function(radius) {
     var coord = {
         lat: 3.071087,
@@ -195,6 +236,7 @@ var requestAPI = function(radius) {
     })
 }
 
+// document ready specific function, event listener etc
 $(document).ready(function() {
     var defaultRadius = $('#radius').val();
     $('.radius-value').text(defaultRadius);
@@ -210,7 +252,7 @@ $(document).ready(function() {
 
         $('.radius-value').text(radius);
 
-        clearMarkers();
+        destroyMarkers();
         drawRadius(radius);
     });
 
