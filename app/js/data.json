@@ -20,5 +20,12 @@
         "Coordinate_Lng": "101.503204",
         "Parking_Availability": "8",
         "distance": "0.2336369255816583"
+    }, {
+        "CCTV_ID": "CCTV_Chancellery-3",
+        "Location": "Chancellery",
+        "Coordinate_Lat": "3.069555",
+        "Coordinate_Lng": "101.503204",
+        "Parking_Availability": "0",
+        "distance": "0.2336369255816583"
     }]
 }
